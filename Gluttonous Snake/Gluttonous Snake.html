@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>贪吃蛇</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;;
+        }
+        body{
+            background-color: pink;
+        }
+        #mycanvas{
+           position: absolute;
+            top:50%;
+            left: 50%;
+            margin: -200px -200px;
+        }
+    </style>
+</head>
+<body>
+<button id="button">开始</button>
+<div>
+    <canvas id="mycanvas" width="400" height="400">
+        你的浏览器不支持Canvas！
+    </canvas>
+</div>
+<script>
+    window.onload = function(){
+        var canvas = document.getElementById('mycanvas');
+        var context = canvas.getContext('2d');
+
+        draw_bg(context);
+
+        var start = document.getElementById('button');
+        start.onclick = game_start(context);
+    };
+
+    function draw_bg(context){
+        for(let i = 0 ; i < 20 ; i++){
+            var x = i*20;
+            for(let j = 0 ; j < 20 ; j++){
+                context.beginPath();
+                var y = j*20;
+                context.rect(x,y,x+20,y+20);
+                if( i%2 === 0 ){
+                    if(j%2=== 0 ){
+                        context.fillStyle = 'greenyellow';
+                    }else{
+                        context.fillStyle = 'yellow';
+                    }
+                }else{
+                    if(j%2===0){
+                        context.fillStyle = 'yellow';
+                    }else{
+                        context.fillStyle = 'greenyellow';
+                    }
+                }
+                context.fill();
+                context.closePath();
+            }
+        }
+    }
+
+    function draw_snake(x,y,ctx){
+            ctx.beginPath();
+            ctx.arc(x,y,6,0,2*Math.PI,true);
+            ctx.fillStyle = 'blue';
+            ctx.fill();
+            ctx.closePath();
+    }
+
+    function draw_fruit(ctx){
+        var fruit_pos_x = Math.floor(Math.random()*20)*20+10;
+        var fruit_pos_y = Math.floor(Math.random()*20)*20+10;
+        var color = 'red';
+        draw_circle(fruit_pos_x,fruit_pos_y,ctx,color);
+    }
+
+    function draw_circle(x,y,ctx,color){
+        ctx.beginPath();
+        ctx.arc(x,y,8,0,2*Math.PI,true);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function game_start(ctx){
+        var x = 210, y=210, l=5;
+        draw_fruit(ctx);
+        /*setInterval(function(){
+            ctx.clearRect(0,0,400,400);
+            draw_bg(ctx);
+            draw_snake( x,y,l,ctx);
+            judge();
+        },500);*/
+    }
+
+
+    function judge(){
+    /*判断碰到墙，碰到身子，吃水果*/
+    }
+</script>
+</body>
+</html>
